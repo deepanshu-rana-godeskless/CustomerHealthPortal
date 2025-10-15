@@ -10,112 +10,107 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export const description = "An interactive area chart";
+export const description = "An interactive area chart for customer and prospect acquisitions";
 
 const chartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-04", desktop: 242, mobile: 260 },
-  { date: "2024-04-05", desktop: 373, mobile: 290 },
-  { date: "2024-04-06", desktop: 301, mobile: 340 },
-  { date: "2024-04-07", desktop: 245, mobile: 180 },
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  { date: "2024-04-09", desktop: 59, mobile: 110 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
-  { date: "2024-04-13", desktop: 342, mobile: 380 },
-  { date: "2024-04-14", desktop: 137, mobile: 220 },
-  { date: "2024-04-15", desktop: 120, mobile: 170 },
-  { date: "2024-04-16", desktop: 138, mobile: 190 },
-  { date: "2024-04-17", desktop: 446, mobile: 360 },
-  { date: "2024-04-18", desktop: 364, mobile: 410 },
-  { date: "2024-04-19", desktop: 243, mobile: 180 },
-  { date: "2024-04-20", desktop: 89, mobile: 150 },
-  { date: "2024-04-21", desktop: 137, mobile: 200 },
-  { date: "2024-04-22", desktop: 224, mobile: 170 },
-  { date: "2024-04-23", desktop: 138, mobile: 230 },
-  { date: "2024-04-24", desktop: 387, mobile: 290 },
-  { date: "2024-04-25", desktop: 215, mobile: 250 },
-  { date: "2024-04-26", desktop: 75, mobile: 130 },
-  { date: "2024-04-27", desktop: 383, mobile: 420 },
-  { date: "2024-04-28", desktop: 122, mobile: 180 },
-  { date: "2024-04-29", desktop: 315, mobile: 240 },
-  { date: "2024-04-30", desktop: 454, mobile: 380 },
-  { date: "2024-05-01", desktop: 165, mobile: 220 },
-  { date: "2024-05-02", desktop: 293, mobile: 310 },
-  { date: "2024-05-03", desktop: 247, mobile: 190 },
-  { date: "2024-05-04", desktop: 385, mobile: 420 },
-  { date: "2024-05-05", desktop: 481, mobile: 390 },
-  { date: "2024-05-06", desktop: 498, mobile: 520 },
-  { date: "2024-05-07", desktop: 388, mobile: 300 },
-  { date: "2024-05-08", desktop: 149, mobile: 210 },
-  { date: "2024-05-09", desktop: 227, mobile: 180 },
-  { date: "2024-05-10", desktop: 293, mobile: 330 },
-  { date: "2024-05-11", desktop: 335, mobile: 270 },
-  { date: "2024-05-12", desktop: 197, mobile: 240 },
-  { date: "2024-05-13", desktop: 197, mobile: 160 },
-  { date: "2024-05-14", desktop: 448, mobile: 490 },
-  { date: "2024-05-15", desktop: 473, mobile: 380 },
-  { date: "2024-05-16", desktop: 338, mobile: 400 },
-  { date: "2024-05-17", desktop: 499, mobile: 420 },
-  { date: "2024-05-18", desktop: 315, mobile: 350 },
-  { date: "2024-05-19", desktop: 235, mobile: 180 },
-  { date: "2024-05-20", desktop: 177, mobile: 230 },
-  { date: "2024-05-21", desktop: 82, mobile: 140 },
-  { date: "2024-05-22", desktop: 81, mobile: 120 },
-  { date: "2024-05-23", desktop: 252, mobile: 290 },
-  { date: "2024-05-24", desktop: 294, mobile: 220 },
-  { date: "2024-05-25", desktop: 201, mobile: 250 },
-  { date: "2024-05-26", desktop: 213, mobile: 170 },
-  { date: "2024-05-27", desktop: 420, mobile: 460 },
-  { date: "2024-05-28", desktop: 233, mobile: 190 },
-  { date: "2024-05-29", desktop: 78, mobile: 130 },
-  { date: "2024-05-30", desktop: 340, mobile: 280 },
-  { date: "2024-05-31", desktop: 178, mobile: 230 },
-  { date: "2024-06-01", desktop: 178, mobile: 200 },
-  { date: "2024-06-02", desktop: 470, mobile: 410 },
-  { date: "2024-06-03", desktop: 103, mobile: 160 },
-  { date: "2024-06-04", desktop: 439, mobile: 380 },
-  { date: "2024-06-05", desktop: 88, mobile: 140 },
-  { date: "2024-06-06", desktop: 294, mobile: 250 },
-  { date: "2024-06-07", desktop: 323, mobile: 370 },
-  { date: "2024-06-08", desktop: 385, mobile: 320 },
-  { date: "2024-06-09", desktop: 438, mobile: 480 },
-  { date: "2024-06-10", desktop: 155, mobile: 200 },
-  { date: "2024-06-11", desktop: 92, mobile: 150 },
-  { date: "2024-06-12", desktop: 492, mobile: 420 },
-  { date: "2024-06-13", desktop: 81, mobile: 130 },
-  { date: "2024-06-14", desktop: 426, mobile: 380 },
-  { date: "2024-06-15", desktop: 307, mobile: 350 },
-  { date: "2024-06-16", desktop: 371, mobile: 310 },
-  { date: "2024-06-17", desktop: 475, mobile: 520 },
-  { date: "2024-06-18", desktop: 107, mobile: 170 },
-  { date: "2024-06-19", desktop: 341, mobile: 290 },
-  { date: "2024-06-20", desktop: 408, mobile: 450 },
-  { date: "2024-06-21", desktop: 169, mobile: 210 },
-  { date: "2024-06-22", desktop: 317, mobile: 270 },
-  { date: "2024-06-23", desktop: 480, mobile: 530 },
-  { date: "2024-06-24", desktop: 132, mobile: 180 },
-  { date: "2024-06-25", desktop: 141, mobile: 190 },
-  { date: "2024-06-26", desktop: 434, mobile: 380 },
-  { date: "2024-06-27", desktop: 448, mobile: 490 },
-  { date: "2024-06-28", desktop: 149, mobile: 200 },
-  { date: "2024-06-29", desktop: 103, mobile: 160 },
-  { date: "2024-06-30", desktop: 446, mobile: 400 },
+  { date: "2025-07-22", customers: 0, prospects: 150, customerName: "", prospectName: "Northland" },
+  { date: "2025-07-23", customers: 0, prospects: 180, customerName: "", prospectName: "Carrefour" },
+  { date: "2025-07-24", customers: 0, prospects: 120, customerName: "", prospectName: "Gdsandbox" },
+  { date: "2025-07-25", customers: 0, prospects: 260, customerName: "", prospectName: "Compuservice" },
+  { date: "2025-07-26", customers: 0, prospects: 290, customerName: "", prospectName: "Field Desk" },
+  { date: "2025-07-27", customers: 1, prospects: 340, customerName: "CAD", prospectName: "Freshworksdemo" },
+  { date: "2025-07-28", customers: 0, prospects: 180, customerName: "", prospectName: "Apexnow" },
+  { date: "2025-07-29", customers: 0, prospects: 320, customerName: "", prospectName: "Acealign" },
+  { date: "2025-07-30", customers: 0, prospects: 220, customerName: "", prospectName: "GoDeskless" },
+  { date: "2025-07-31", customers: 0, prospects: 110, customerName: "", prospectName: "Mi" },
+  { date: "2025-08-01", customers: 1, prospects: 190, customerName: "Carrefour", prospectName: "Mailhost" },
+  { date: "2025-08-02", customers: 0, prospects: 360, customerName: "", prospectName: "Nesttech" },
+  { date: "2025-08-03", customers: 0, prospects: 410, customerName: "", prospectName: "NextLevel Tech" },
+  { date: "2025-08-04", customers: 0, prospects: 180, customerName: "", prospectName: "Univision" },
+  { date: "2025-08-05", customers: 0, prospects: 150, customerName: "", prospectName: "NextLevel" },
+  { date: "2025-08-06", customers: 0, prospects: 200, customerName: "", prospectName: "Freshdemo" },
+  { date: "2025-08-07", customers: 0, prospects: 170, customerName: "", prospectName: "" },
+  { date: "2025-08-08", customers: 0, prospects: 230, customerName: "", prospectName: "" },
+  { date: "2025-08-09", customers: 0, prospects: 290, customerName: "", prospectName: "" },
+  { date: "2025-08-10", customers: 0, prospects: 250, customerName: "", prospectName: "" },
+  { date: "2025-08-11", customers: 1, prospects: 130, customerName: "Capital Concrete", prospectName: "" },
+  { date: "2025-08-12", customers: 0, prospects: 420, customerName: "", prospectName: "" },
+  { date: "2025-08-13", customers: 0, prospects: 180, customerName: "", prospectName: "" },
+  { date: "2025-08-14", customers: 0, prospects: 240, customerName: "", prospectName: "" },
+  { date: "2025-08-15", customers: 0, prospects: 380, customerName: "", prospectName: "" },
+  { date: "2025-08-16", customers: 0, prospects: 220, customerName: "", prospectName: "" },
+  { date: "2025-08-17", customers: 0, prospects: 310, customerName: "", prospectName: "" },
+  { date: "2025-08-18", customers: 0, prospects: 190, customerName: "", prospectName: "" },
+  { date: "2025-08-19", customers: 0, prospects: 420, customerName: "", prospectName: "" },
+  { date: "2025-08-20", customers: 0, prospects: 390, customerName: "", prospectName: "" },
+  { date: "2025-08-21", customers: 1, prospects: 520, customerName: "Cooly Connects", prospectName: "" },
+  { date: "2025-08-22", customers: 0, prospects: 300, customerName: "", prospectName: "" },
+  { date: "2025-08-23", customers: 0, prospects: 210, customerName: "", prospectName: "" },
+  { date: "2025-08-24", customers: 0, prospects: 180, customerName: "", prospectName: "" },
+  { date: "2025-08-25", customers: 0, prospects: 330, customerName: "", prospectName: "" },
+  { date: "2025-08-26", customers: 0, prospects: 270, customerName: "", prospectName: "" },
+  { date: "2025-08-27", customers: 0, prospects: 240, customerName: "", prospectName: "" },
+  { date: "2025-08-28", customers: 0, prospects: 160, customerName: "", prospectName: "" },
+  { date: "2025-08-29", customers: 0, prospects: 490, customerName: "", prospectName: "" },
+  { date: "2025-08-30", customers: 0, prospects: 380, customerName: "", prospectName: "" },
+  { date: "2025-08-31", customers: 1, prospects: 400, customerName: "Noch Power", prospectName: "" },
+  { date: "2025-09-01", customers: 0, prospects: 420, customerName: "", prospectName: "" },
+  { date: "2025-09-02", customers: 0, prospects: 350, customerName: "", prospectName: "" },
+  { date: "2025-09-03", customers: 0, prospects: 180, customerName: "", prospectName: "" },
+  { date: "2025-09-04", customers: 0, prospects: 230, customerName: "", prospectName: "" },
+  { date: "2025-09-05", customers: 0, prospects: 140, customerName: "", prospectName: "" },
+  { date: "2025-09-06", customers: 0, prospects: 120, customerName: "", prospectName: "" },
+  { date: "2025-09-07", customers: 0, prospects: 290, customerName: "", prospectName: "" },
+  { date: "2025-09-08", customers: 0, prospects: 220, customerName: "", prospectName: "" },
+  { date: "2025-09-09", customers: 0, prospects: 250, customerName: "", prospectName: "" },
+  { date: "2025-09-10", customers: 1, prospects: 170, customerName: "Telesis", prospectName: "" },
+  { date: "2025-09-11", customers: 0, prospects: 460, customerName: "", prospectName: "" },
+  { date: "2025-09-12", customers: 0, prospects: 190, customerName: "", prospectName: "" },
+  { date: "2025-09-13", customers: 0, prospects: 130, customerName: "", prospectName: "" },
+  { date: "2025-09-14", customers: 0, prospects: 280, customerName: "", prospectName: "" },
+  { date: "2025-09-15", customers: 0, prospects: 230, customerName: "", prospectName: "" },
+  { date: "2025-09-16", customers: 0, prospects: 200, customerName: "", prospectName: "" },
+  { date: "2025-09-17", customers: 0, prospects: 410, customerName: "", prospectName: "" },
+  { date: "2025-09-18", customers: 0, prospects: 160, customerName: "", prospectName: "" },
+  { date: "2025-09-19", customers: 0, prospects: 380, customerName: "", prospectName: "" },
+  { date: "2025-09-20", customers: 1, prospects: 140, customerName: "The Social Gaming Group", prospectName: "" },
+  { date: "2025-09-21", customers: 0, prospects: 250, customerName: "", prospectName: "" },
+  { date: "2025-09-22", customers: 0, prospects: 370, customerName: "", prospectName: "" },
+  { date: "2025-09-23", customers: 0, prospects: 320, customerName: "", prospectName: "" },
+  { date: "2025-09-24", customers: 0, prospects: 480, customerName: "", prospectName: "" },
+  { date: "2025-09-25", customers: 0, prospects: 200, customerName: "", prospectName: "" },
+  { date: "2025-09-26", customers: 0, prospects: 150, customerName: "", prospectName: "" },
+  { date: "2025-09-27", customers: 0, prospects: 420, customerName: "", prospectName: "" },
+  { date: "2025-09-28", customers: 0, prospects: 130, customerName: "", prospectName: "" },
+  { date: "2025-09-29", customers: 0, prospects: 380, customerName: "", prospectName: "" },
+  { date: "2025-09-30", customers: 1, prospects: 350, customerName: "Ametek", prospectName: "" },
+  { date: "2025-10-01", customers: 0, prospects: 310, customerName: "", prospectName: "" },
+  { date: "2025-10-02", customers: 0, prospects: 520, customerName: "", prospectName: "" },
+  { date: "2025-10-03", customers: 0, prospects: 170, customerName: "", prospectName: "" },
+  { date: "2025-10-04", customers: 0, prospects: 290, customerName: "", prospectName: "" },
+  { date: "2025-10-05", customers: 0, prospects: 450, customerName: "", prospectName: "" },
+  { date: "2025-10-06", customers: 0, prospects: 210, customerName: "", prospectName: "" },
+  { date: "2025-10-07", customers: 0, prospects: 270, customerName: "", prospectName: "" },
+  { date: "2025-10-08", customers: 0, prospects: 530, customerName: "", prospectName: "" },
+  { date: "2025-10-09", customers: 0, prospects: 180, customerName: "", prospectName: "" },
+  { date: "2025-10-10", customers: 1, prospects: 190, customerName: "maricopaelections", prospectName: "" },
+  { date: "2025-10-11", customers: 0, prospects: 380, customerName: "", prospectName: "" },
+  { date: "2025-10-12", customers: 0, prospects: 490, customerName: "", prospectName: "" },
+  { date: "2025-10-13", customers: 0, prospects: 200, customerName: "", prospectName: "" },
+  { date: "2025-10-14", customers: 0, prospects: 160, customerName: "", prospectName: "" },
+  { date: "2025-10-15", customers: 1, prospects: 400, customerName: "Noch Power", prospectName: "" },
 ];
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  acquisitions: {
+    label: "Acquisitions",
   },
-  desktop: {
-    label: "Desktop",
+  customers: {
+    label: "Customers",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  prospects: {
+    label: "Prospects",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -132,7 +127,7 @@ export function ChartAreaInteractive() {
 
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date);
-    const referenceDate = new Date("2024-06-30");
+    const referenceDate = new Date("2025-10-15");
     let daysToSubtract = 90;
     if (timeRange === "30d") {
       daysToSubtract = 30;
@@ -147,9 +142,9 @@ export function ChartAreaInteractive() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Total Visitors</CardTitle>
+        <CardTitle>Total Customers and Prospects</CardTitle>
         <CardDescription>
-          <span className="hidden @[540px]/card:block">Total for the last 3 months</span>
+          <span className="hidden @[540px]/card:block">Total acquisitions for the last 3 months</span>
           <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>
         <CardAction>
@@ -190,13 +185,13 @@ export function ChartAreaInteractive() {
         <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
           <AreaChart data={filteredData}>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={1.0} />
-                <stop offset="95%" stopColor="var(--color-desktop)" stopOpacity={0.1} />
+              <linearGradient id="fillCustomers" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-customers)" stopOpacity={0.5} />
+                <stop offset="95%" stopColor="var(--color-customers)" stopOpacity={0.1} />
               </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-mobile)" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="var(--color-mobile)" stopOpacity={0.1} />
+              <linearGradient id="fillProspects" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-prospects)" stopOpacity={0.5} />
+                <stop offset="95%" stopColor="var(--color-prospects)" stopOpacity={0.1} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
@@ -225,12 +220,21 @@ export function ChartAreaInteractive() {
                       day: "numeric",
                     });
                   }}
+                  formatter={(value, name, props) => {
+                    const { payload } = props;
+                    if (name === "customers" && value > 0 && payload.customerName) {
+                      return [`Customer: ${payload.customerName} (Acquired: ${value})`, "Customers"];
+                    } else if (name === "prospects" && value > 0 && payload.prospectName) {
+                      return [`Prospect: ${payload.prospectName} (New: ${value})`, "Prospects"];
+                    }
+                    return value > 0 ? [value, name] : null;
+                  }}
                   indicator="dot"
                 />
               }
             />
-            <Area dataKey="mobile" type="natural" fill="url(#fillMobile)" stroke="var(--color-mobile)" stackId="a" />
-            <Area dataKey="desktop" type="natural" fill="url(#fillDesktop)" stroke="var(--color-desktop)" stackId="a" />
+            <Area dataKey="customers" type="natural" fill="url(#fillCustomers)" stroke="var(--color-customers)" />
+            <Area dataKey="prospects" type="natural" fill="url(#fillProspects)" stroke="var(--color-prospects)" />
           </AreaChart>
         </ChartContainer>
       </CardContent>

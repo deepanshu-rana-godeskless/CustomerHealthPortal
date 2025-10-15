@@ -134,7 +134,7 @@ export function SectionCards() {
             in the average calculation.
           </span>
         </div>,
-        { duration: 7000 }
+        { duration: 8000 }
       );
     }
   }, [healthDialogOpen, activeTab]);
@@ -282,12 +282,12 @@ export function SectionCards() {
       <Card className="@container/card py-3">
         <CardHeader className="flex flex-col gap-2">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
-            <TabsList className="relative flex justify-center gap-2 border-b pb-1 px-4">
+            <TabsList className="relative flex justify-center gap-1 border-b pb-1 px-1 overflow-x-auto scrollbar-none">
               {["customers", "prospects"].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="relative px-2 py-1 text-xs font-medium transition-colors duration-200"
+                  className="relative px-1.5 py-1 text-[10px] sm:text-xs font-medium transition-colors duration-200 whitespace-nowrap flex-shrink-0"
                 >
                   {tab === "customers" ? "Total Customers" : "Total Prospects"}
                   {activeTab === tab && (
@@ -333,19 +333,19 @@ export function SectionCards() {
       {/* --- Tickets Card --- */}
       <Card className="@container/card py-3">
         <CardHeader className="flex flex-col gap-2 px-1">
-          <Tabs value={ticketTab} onValueChange={(v) => setTicketTab(v as typeof ticketTab)} className="w-full">
-            <TabsList className="relative flex justify-center gap-2 border-b pb-1">
+          <Tabs value={ticketTab} onValueChange={(v) => setTicketTab(v as typeof ticketTab)} className="w-full px-2">
+            <TabsList className="relative flex justify-center gap-1 border-b pb-1 px-1 overflow-x-auto scrollbar-none">
               {["open", "closed", "total"].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="relative px-2 py-1 text-xs font-medium transition-colors duration-200"
+                  className="relative px-1.5 py-1 text-[10px] sm:text-xs font-medium transition-colors duration-200 whitespace-nowrap flex-shrink-0"
                 >
-                  {tab === "open" ? "Open Tickets" : tab === "closed" ? "Closed Tickets" : "Total Tickets"}
+                  {tab === "open" ? "Open Tickets" : tab === "closed" ? "Closed Tickets" : "Total"}
                   {ticketTab === tab && (
                     <motion.div
                       layoutId="tab-underline-tickets"
-                      className="bg-primary absolute bottom-0 left-1/2 h-[2px] w-20 -translate-x-1/2 rounded-full"
+                      className={`bg-primary absolute bottom-0 left-1/2 h-[2px] ${tab === "total" ? "w-7" : "w-20"} -translate-x-1/2 rounded-full`}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     />
                   )}
@@ -397,18 +397,18 @@ export function SectionCards() {
       <Card className="@container/card py-3">
         <CardHeader className="flex flex-col gap-2 px-1">
           <Tabs value={visitsTab} onValueChange={(v) => setVisitsTab(v as typeof visitsTab)} className="w-full px-4">
-            <TabsList className="relative flex justify-center gap-2 border-b pb-1">
+            <TabsList className="relative flex justify-center gap-1 border-b pb-1 px-1 overflow-x-auto scrollbar-none">
               {["open", "closed", "total"].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="relative px-2 py-1 text-xs font-medium transition-colors duration-200"
+                  className="relative px-1.5 py-1 text-[10px] sm:text-xs font-medium transition-colors duration-200 whitespace-nowrap flex-shrink-0"
                 >
-                  {tab === "open" ? "Open Visits" : tab === "closed" ? "Closed Visits" : "Total Visits"}
+                  {tab === "open" ? "Open Visits" : tab === "closed" ? "Closed Visits" : "Total"}
                   {visitsTab === tab && (
                     <motion.div
                       layoutId="tab-underline-visits"
-                      className="bg-primary absolute bottom-0 left-1/2 h-[2px] w-17 -translate-x-1/2 rounded-full"
+                      className={`bg-primary absolute bottom-0 left-1/2 h-[2px] ${tab === "total" ? "w-7" : "w-17"} -translate-x-1/2 rounded-full`}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     />
                   )}
@@ -459,12 +459,12 @@ export function SectionCards() {
       {/* --- Avg Health Score --- */}
       <Card className="@container/card py-5">
         <CardHeader>
-          <CardDescription className="flex items-center gap-2">
+          <CardDescription className="flex items-center gap-2 mt-1 text-large">
             <Heart className="size-4" />
             Avg Health Score
           </CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl mt-6">
-           <TooltipProvider>
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span
@@ -508,33 +508,19 @@ export function SectionCards() {
                 </u>
               </CardTitle>
             </CardHeader>
-            {/* Disclaimer for null scores */}
-            {(activeTab === "customers" ? customers : prospects).some(
-              (c) => c.company_score === null || c.company_score === "" || isNaN(parseFloat(c.company_score as string))
-            ) && (
-                <Alert variant="warning" className="mb-4">
-                  <AlertTriangle className="h-8 w-8" />
-                  <AlertTitle>Note</AlertTitle>
-                  <AlertDescription>
-                    {activeTab === "customers" ? "Customers" : "Prospects"} with{" "}
-                    <span className="font-semibold">null</span> health scores are not included in the average
-                    calculation.
-                  </AlertDescription>
-                </Alert>
-              )}
             <div className="overflow-auto min-h-[180px] max-h-[240px] sm:max-h-[240px] w-full">
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead className="text-start font-bold">Company</TableHead>
-                    <TableHead className="text-center font-bold">Health Score</TableHead>
+                    <TableHead className="text-end font-bold px-4">Health Score</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {(activeTab === "customers" ? customers : prospects).map((c, idx) => (
                     <TableRow key={c.id || idx}>
                       <TableCell className="font-medium text-start">{c.company}</TableCell>
-                      <TableCell className="text-center">
+                      <TableCell className="px-4 text-end">
                         {c.company_score !== null &&
                           c.company_score !== "" &&
                           !isNaN(parseFloat(c.company_score as string)) ? (
@@ -653,10 +639,10 @@ export function SectionCards() {
                         {customer.company_score ? (
                           <span
                             className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${parseFloat(customer.company_score) >= 90
-                                ? "bg-green-100 text-green-800"
-                                : parseFloat(customer.company_score) >= 75
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : "bg-red-100 text-red-800"
+                              ? "bg-green-100 text-green-800"
+                              : parseFloat(customer.company_score) >= 75
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
                               }`}
                           >
                             {customer.company_score}%
@@ -673,10 +659,10 @@ export function SectionCards() {
                       <TableCell>
                         <span
                           className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${customer.client_type === "CUSTOMER"
-                              ? "bg-green-100 text-green-800"
-                              : customer.client_type === "DEMO"
-                                ? "bg-blue-100 text-blue-800"
-                                : "bg-gray-100 text-gray-800"
+                            ? "bg-green-100 text-green-800"
+                            : customer.client_type === "DEMO"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-gray-100 text-gray-800"
                             }`}
                         >
                           {customer.client_type}
@@ -720,10 +706,10 @@ export function SectionCards() {
                       <TableCell>
                         <span
                           className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${prospect.client_type === "DEMO"
-                              ? "bg-blue-100 text-blue-800"
-                              : prospect.client_type === "DEV_QA"
-                                ? "bg-orange-100 text-orange-800"
-                                : "bg-gray-100 text-gray-800"
+                            ? "bg-blue-100 text-blue-800"
+                            : prospect.client_type === "DEV_QA"
+                              ? "bg-orange-100 text-orange-800"
+                              : "bg-gray-100 text-gray-800"
                             }`}
                         >
                           {prospect.client_type}
@@ -733,10 +719,10 @@ export function SectionCards() {
                         <div className="flex flex-col gap-1 items-center justify-center">
                           <span
                             className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap ${prospect.on_trial
-                                ? "bg-blue-50 text-blue-700 border border-blue-200"
-                                : prospect.trial_expired
-                                  ? "bg-red-50 text-red-700 border border-red-200"
-                                  : "bg-gray-50 text-gray-700 border border-gray-200"
+                              ? "bg-blue-50 text-blue-700 border border-blue-200"
+                              : prospect.trial_expired
+                                ? "bg-red-50 text-red-700 border border-red-200"
+                                : "bg-gray-50 text-gray-700 border border-gray-200"
                               }`}
                           >
                             {prospect.on_trial ? "On Trial" : prospect.trial_expired ? "Trial Expired" : "Inactive"}
