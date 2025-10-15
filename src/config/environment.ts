@@ -9,11 +9,11 @@
 // };
 
 // QA
-// export const environment = {
-//   production: false,
-//   apiUrl: 'https://stbbackend-qa.godeskless.com',
-//   leadCreationApiUrl: 'https://stbpy3dev.godeskless.com'
-// };
+export const environment = {
+  production: false,
+  apiUrl: 'https://stbbackend-qa.godeskless.com',
+  leadCreationApiUrl: 'https://stbpy3dev.godeskless.com'
+};
 
 // Staging
 // export const environment = {
@@ -23,8 +23,8 @@
 // };
 
 // Prod
-export const environment = {
-  production: true,
-  apiUrl: 'https://stbbackend.godeskless.com',
-  leadCreationApiUrl: 'https://trackhelpprod.godeskless.com'
-};
+// export const environment = {
+//   production: true,
+//   apiUrl: 'https://stbbackend.godeskless.com',
+//   leadCreationApiUrl: 'https://trackhelpprod.godeskless.com'
+// };
