@@ -18,7 +18,36 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatDate, getDateStatus } from "@/lib/date-utils";
 import { getHealthScoreStyling, getPaymentDateStyling } from "@/lib/health-score-utils";
-import type { Customer } from "@/types/customers";
+// Customer types
+interface Customer {
+  id: number;
+  company: string;
+  business_email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  plan_type: string;
+  company_score: string | null;
+  is_paid_user: boolean;
+  paid_until: string;
+  total_activated_users: number;
+  allowed_users: number;
+  crm_type: string;
+  product_name: string;
+  subdomain: string;
+  tenant_type: string;
+  is_license_exceeded: boolean;
+  next_qbr_date: string | null;
+  csm_assigned_and_touchpoint_notes: string;
+  client_type: string;
+  end_date: string;
+  customer_support_mobile_number?: string | null;
+  last_qbr_date?: string | null;
+  final_comment?: string | null;
+  on_trial: boolean;
+  trial_expired: boolean;
+  created_on: string;
+}
 
 type CustomersColumnsOptions = {
   onViewCustomer: (customerId: string) => void;

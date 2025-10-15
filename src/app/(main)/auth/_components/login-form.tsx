@@ -46,11 +46,9 @@ export function LoginForm() {
         description: `Successfully authenticated. Redirecting to Customer Health Portal...`,
       });
 
-      // Redirect to dashboard after short delay for user feedback
-      setTimeout(() => {
-        router.push("/dashboard/default");
-        router.refresh(); // Refresh to update auth state
-      }, 1500);
+      // Immediate redirect to dashboard
+      router.push("/dashboard");
+      router.refresh(); // Refresh to update auth state
     } catch (error) {
       // Handle authentication errors
       const errorMessage = error instanceof Error ? error.message : "Authentication failed";

@@ -21,10 +21,49 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useCustomers } from "@/hooks/use-customers";
+import { customersService } from "@/services/data-service";
 import { useDataTableInstance } from "@/hooks/use-data-table-instance";
 import { exportCustomers, type ExportFormat } from "@/lib/export-utils";
-import type { CustomerFilter } from "@/types/customers";
+// Customer types
+interface Customer {
+  id: number;
+  company: string;
+  business_email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  plan_type: string;
+  company_score: string | null;
+  is_paid_user: boolean;
+  paid_until: string;
+  total_activated_users: number;
+  allowed_users: number;
+  crm_type: string;
+  product_name: string;
+  subdomain: string;
+  tenant_type: string;
+  is_license_exceeded: boolean;
+  next_qbr_date: string | null;
+  csm_assigned_and_touchpoint_notes: string;
+  client_type: string;
+  end_date: string;
+  customer_support_mobile_number?: string | null;
+  last_qbr_date?: string | null;
+  final_comment?: string | null;
+  on_trial: boolean;
+  trial_expired: boolean;
+  created_on: string;
+}
+
+interface CustomersResponse {
+  next: string | null;
+  previous: string | null;
+  count: number;
+  total_pages: number;
+  results: Customer[];
+}
+
+type CustomerFilter = "paid" | "default";
 
 import { AddBusinessModal } from "../../add-business/_components/add-business-modal";
 
@@ -40,10 +79,41 @@ export function CustomersTable({ customerFilter, setCustomerFilter }: Props) {
   const router = useRouter(); // Initialize Next.js router
 
   const [currentPage, setCurrentPage] = useState(1);
-  const { customers, loading, error, pagination, refetch } = useCustomers(currentPage, customerFilter);
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pagination, setPagination] = useState({
+    count: 0,
+    totalPages: 0,
+    next: null,
+    previous: null,
+  });
+
+  const fetchCustomers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await customersService.getTenants({ tenant_type: customerFilter }, currentPage);
+      setCustomers(response.results);
+      setPagination({
+        count: response.count,
+        totalPages: response.total_pages,
+        next: response.next,
+        previous: response.previous,
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch customers");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchCustomers();
+  }, [currentPage, customerFilter]);
 
   const handleViewCustomer = (customerId: string) => {
-    router.push(`/dashboard/customers/${customerId}`);
+    router.push(`/customers/${customerId}`);
   };
 
   const columns = customersColumns({ onViewCustomer: handleViewCustomer }); // Call the function with navigation handler
@@ -54,10 +124,6 @@ export function CustomersTable({ customerFilter, setCustomerFilter }: Props) {
     getRowId: (row) => row.id.toString(),
     defaultPageSize: 20, // Match API page size
   });
-
-  React.useEffect(() => {
-    table.setPageIndex(0);
-  }, [customers, table]);
 
   React.useEffect(() => {
     setCurrentPage(1);
@@ -79,7 +145,7 @@ export function CustomersTable({ customerFilter, setCustomerFilter }: Props) {
   const canNextPage = pagination.next !== null && currentPage < pagination.totalPages;
 
   const handleRefresh = () => {
-    refetch();
+    fetchCustomers();
   };
 
   const handleExport = (format: ExportFormat) => {

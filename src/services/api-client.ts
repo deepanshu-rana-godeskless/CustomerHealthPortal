@@ -6,8 +6,9 @@
  */
 
 import { AuthService } from "./auth-service";
+import { environment } from "@/config/environment";
 
-const API_BASE_URL = "https://stbbackend.godeskless.com";
+const API_BASE_URL = environment.apiUrl;
 
 // Public endpoints that don't require authentication
 const PUBLIC_ENDPOINTS = ["/login/", "/analytics/", "/password-reset/"];

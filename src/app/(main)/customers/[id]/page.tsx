@@ -13,10 +13,39 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { DotPattern } from "@/components/ui/dot-pattern";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useCustomers } from "@/hooks/use-customers";
+import { customersService } from "@/services/data-service";
 import { formatDate } from "@/lib/date-utils";
 import { cn } from "@/lib/utils";
-import type { Customer } from "@/types/customers";
+// Customer types
+interface Customer {
+  id: number;
+  company: string;
+  business_email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  plan_type: string;
+  company_score: string | null;
+  is_paid_user: boolean;
+  paid_until: string;
+  total_activated_users: number;
+  allowed_users: number;
+  crm_type: string;
+  product_name: string;
+  subdomain: string;
+  tenant_type: string;
+  is_license_exceeded: boolean;
+  next_qbr_date: string | null;
+  csm_assigned_and_touchpoint_notes: string;
+  client_type: string;
+  end_date: string;
+  customer_support_mobile_number?: string | null;
+  last_qbr_date?: string | null;
+  final_comment?: string | null;
+  on_trial: boolean;
+  trial_expired: boolean;
+  created_on: string;
+}
 
 interface CustomerDetailsPageProps {
   params: { id: string };
@@ -25,40 +54,50 @@ interface CustomerDetailsPageProps {
 export default function CustomerDetailsPage({ params }: CustomerDetailsPageProps) {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [loading, setLoading] = useState(true);
-  const { customers } = useCustomers(1, "paid");
-  const { customers: prospects } = useCustomers(1, "default");
-
   useEffect(() => {
-    const allCustomers = [...customers, ...prospects];
-    const foundCustomer = allCustomers.find((c) => c.id.toString() === params.id);
-    if (foundCustomer) setCustomer(foundCustomer);
-    setLoading(false);
-  }, [params.id, customers, prospects]);
+    const fetchCustomer = async () => {
+      setLoading(true);
+      try {
+        const paidRes = await customersService.getTenants({ tenant_type: "paid" }, 1);
+        const defaultRes = await customersService.getTenants({ tenant_type: "default" }, 1);
+        const allCustomers = [...paidRes.results, ...defaultRes.results];
+        const foundCustomer = allCustomers.find((c) => c.id.toString() === params.id);
+        if (foundCustomer) setCustomer(foundCustomer);
+      } catch (err) {
+        setCustomer(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomer();
+  }, [params.id]);
 
-  const TruncatedBadge = ({
-    children,
-    className,
-    ...props
-  }: {
-    children: React.ReactNode;
-    className?: string;
-    [key: string]: any;
-  }) => (
-    <div
-      className={cn("bg-background border-input truncate rounded-md border px-2 py-1 text-sm font-medium", className)}
-      style={{
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        maxWidth: "100%",
-      }}
-      {...props}
-    >
-      {children}
-    </div>
-  );
+  // TruncatedBadge moved outside hooks
 
   if (loading) {
+    // TruncatedBadge component for truncating badge text
+    const TruncatedBadge = ({
+      children,
+      className,
+      ...props
+    }: {
+      children: React.ReactNode;
+      className?: string;
+      [key: string]: any;
+    }) => (
+      <div
+        className={cn("bg-background border-input truncate rounded-md border px-2 py-1 text-sm font-medium", className)}
+        style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          maxWidth: "100%",
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    );
     return (
       <div className="bg-background relative flex min-h-screen items-center justify-center">
         <DotPattern
@@ -98,7 +137,7 @@ export default function CustomerDetailsPage({ params }: CustomerDetailsPageProps
           <h1 className="mb-2 text-2xl font-bold">Customer Not Found</h1>
           <p className="text-muted-foreground mb-4">The customer with ID {params.id} could not be found.</p>
           <Button asChild>
-            <Link href="/dashboard/customers">
+            <Link href="/customers">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Customers
             </Link>
@@ -220,9 +259,9 @@ export default function CustomerDetailsPage({ params }: CustomerDetailsPageProps
                         <span className="text-muted-foreground text-xs">Name</span>
                         <span className="text-foreground text-base">
                           {typeof (customer as any).secondary_first_name !== "undefined" ||
-                          typeof (customer as any).secondary_last_name !== "undefined"
+                            typeof (customer as any).secondary_last_name !== "undefined"
                             ? `${(customer as any).secondary_first_name || ""} ${(customer as any).secondary_last_name || ""}`.trim() ||
-                              "-"
+                            "-"
                             : "-"}
                         </span>
                       </div>

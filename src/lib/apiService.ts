@@ -1,6 +1,7 @@
 import axios from "axios";
+import { environment } from "@/config/environment";
 
-const API_BASE_URL = "https://stbbackend.godeskless.com/api";
+const API_BASE_URL = environment.apiUrl;
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

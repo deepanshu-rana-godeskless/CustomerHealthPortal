@@ -6,8 +6,9 @@
  */
 
 import type { LoginRequest, LoginResponse, LoginErrorResponse, StoredAuthData } from "@/types/auth";
+import { environment } from "@/config/environment";
 
-const API_BASE_URL = "https://stbbackend.godeskless.com/api/stb/api/v1";
+const API_BASE_URL = `${environment.apiUrl}/api/stb/api/v1`;
 const AUTH_STORAGE_KEY = "godeskless_auth_data";
 
 export class AuthService {
@@ -53,11 +54,15 @@ export class AuthService {
     };
 
     try {
+      // Store in localStorage for client-side access
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(storedData));
+      localStorage.setItem("accessToken", authData.access_token);
 
-      // Also set a simple cookie for middleware authentication
+      // Set secure cookie for middleware authentication
       const expiresAt = new Date(Date.now() + authData.expires_in * 1000);
-      document.cookie = `auth-token=${authData.access_token}; path=/; expires=${expiresAt.toUTCString()}; SameSite=Lax; Secure`;
+      const isProduction = window.location.protocol === 'https:';
+      const secureFlag = isProduction ? '; Secure' : '';
+      document.cookie = `godeskless_auth_token=${authData.access_token}; path=/; expires=${expiresAt.toUTCString()}; SameSite=Lax${secureFlag}`;
     } catch (error) {
       console.error("Failed to store authentication data:", error);
     }
@@ -126,8 +131,13 @@ export class AuthService {
   static logout(): void {
     this.clearAuthData();
 
+    // Clear localStorage tokens
+    localStorage.removeItem("accessToken");
+
     // Clear auth cookie
-    document.cookie = "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax; Secure";
+    const isProduction = window.location.protocol === 'https:';
+    const secureFlag = isProduction ? '; Secure' : '';
+    document.cookie = `godeskless_auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax${secureFlag}`;
 
     // Redirect to login
     if (typeof window !== "undefined") {

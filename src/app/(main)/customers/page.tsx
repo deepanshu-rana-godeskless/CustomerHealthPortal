@@ -8,7 +8,8 @@
 
 import { useState } from "react";
 
-import type { CustomerFilter } from "@/types/customers";
+// Customer types
+type CustomerFilter = "paid" | "default";
 
 import { AddBusinessModal } from "../add-business/_components/add-business-modal";
 
