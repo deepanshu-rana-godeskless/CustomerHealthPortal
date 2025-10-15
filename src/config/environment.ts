@@ -16,15 +16,15 @@
 // };
 
 // Staging
-// export const environment = {
-//   production: false,
-//   apiUrl: 'https://stbbackend-staging.godeskless.com',
-//   leadCreationApiUrl: 'https://trackhelpstaging.godeskless.com'
-// };
+export const environment = {
+  production: false,
+  apiUrl: 'https://stbbackend-staging.godeskless.com',
+  leadCreationApiUrl: 'https://trackhelpstaging.godeskless.com'
+};
 
 // Prod
-export const environment = {
-  production: true,
-  apiUrl: 'https://stbbackend.godeskless.com',
-  leadCreationApiUrl: 'https://trackhelpprod.godeskless.com'
-};
+// export const environment = {
+//   production: true,
+//   apiUrl: 'https://stbbackend.godeskless.com',
+//   leadCreationApiUrl: 'https://trackhelpprod.godeskless.com'
+// };
